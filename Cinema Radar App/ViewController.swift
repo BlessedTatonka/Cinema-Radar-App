@@ -12,6 +12,8 @@ import MapKit
 class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     @IBOutlet var mapView: MKMapView!
+    
+    var onLaunch = true
     let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
@@ -30,8 +32,11 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         let region = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5))
-        
-        self.mapView.setRegion(region, animated: true)
+
+        if onLaunch {
+            self.mapView.setRegion(region, animated: true)
+            onLaunch = false
+        }
     }
     
     @IBAction func showNearby(_ sender: Any) {
